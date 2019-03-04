@@ -1,0 +1,11 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 870bfd89bedebc11704888f138530c6f882dee4398ccff97d7a2a8ccec270ff1
+
+name:           tidal-stack-wrapper
+version:        0.0.0
+build-type:     Simple

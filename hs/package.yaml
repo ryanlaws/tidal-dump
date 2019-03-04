@@ -1,0 +1,5 @@
+spec-version: "0.30.0"
+name: "tidal-stack-wrapper"
+dependencies: 
+- tidal >= 1.0.7
+- base >= 4.0.0.0

@@ -1,0 +1,342 @@
+setcps (90/240)
+
+setcps (110/240)
+
+d1 $ "bd*16"
+
+d1 
+	$ stack [
+		s "ht" # speed 0.4 # accelerate (-1.0),
+		s "lt" # release 0.03
+	] 
+	# gain 1.6
+	|+| n (stack [
+		"[0 ~ ~ 0] ~" |+| (segment 4 $ rand * 1)
+		-- ,sometimes (const (
+		-- 	-- (((choose [1, 2])/16) <~) $ "<0 [[[0*2 ~] ~] ~]>"
+		-- 	"<0 [[[0*2 ~] ~] ~]>"
+		-- )) $ "~"
+	])
+	# release 0.2
+	# interp 2
+
+d6 
+	-- $ rarely (ply (choose [1, 1, 1, 2, 4, 6]))
+	-- $ sometimes (|* speed (-1))
+	$ stack [
+			rarely (const (((1/16) <~) $ s "hc")) $ s "~",
+			s "[~ ho]*2" # speed (1.001 + (rand / 50)) # pan 0,
+			s "[~ ho]*2" # speed (0.999 - (rand / 50)) # pan 1
+		] 
+	# hpq 0.3
+	# hpf 350
+	# gain 0.9
+	# n (rand * 5)
+	# begin (rand / 10)
+	# end 0.4
+	# speed 0.18
+	# release (0.2 + (rand / 2))
+	# interp 1
+
+d2
+	$ fast 2
+	$ stack [
+		"[~ <cp realclaps cp>]" 
+			# n (segment 16 (rand * 4)) 
+			# pan 0.5
+			|- pan (rand / 4)
+			|- speed 0.1
+			|- speed (rand / 5),
+		"[~ <cp realclaps realclaps cp realclaps>]" 
+			# n (segment 16 (rand * 4)) 
+			# pan 0.5
+			|+ pan (rand / 4)
+			|+ speed 0.1
+			|+ speed (rand / 5)
+	] |* gain 1.2 # interp 1 |+ speed 1.1 # release 0.4
+
+d3 
+	$ swingBy ((5 + rand * 12)/100) 8
+	$ stack [
+		-- rarely (ply "<1 1 2 1>") $
+		  -- $ rarely (/| speed 2)
+			s "hc*16" 
+			# n (rand * 9) 
+			# gain 0.7 
+			|+| release (0.1 + (segment 4 $ rand) / 10)
+			|+| pan 0.5
+			# speed (1.2 + (rand * 0.06))
+			# cut 3,
+		"[~ ho]*4" # n 1 # gain 0.8 # speed 1.2 # release 0.4
+	]
+	* gain 0.9
+	# interp 4
+
+d4 
+	$ swingBy ((5 + rand * 12)/100) 8
+	$ rarely (|+ up (fast 16 (choose [0, 7, 12, -12])))
+	-- $ sometimes (+ lpq (rand / 2))
+	$ rarely (+ release (0.5 + rand / 2) |+| loop 100)
+	$ stack [
+		-- "[bass(<3 3 5 3 8>, 8, <0 1 2 0 1 4 0 3>)]*2",
+		"[bass(3, 8, <0 2 1 4 3>)]*2",
+		sometimes (every 2 (const (((1/16) <~) 
+			$ s "bass" # up 12 # gain 2 # lpf 1000
+		))) $ "~"
+	]
+	# n 2
+	# gain 1.3 # begin (7/80) # end (8/80)
+	+ up "<0 5 3 7 10 12 >"
+	+ up 6.3
+	# loop 99 
+	# hpq 0.8
+	# hpf 60
+	# lpq 0.2
+	# lpf 700
+	# octave 2 
+	# release 0.2
+	-- # lpq 0
+	-- # lpf ((segment 16 (choose [1, 2, 3, 4, 5, 7])) * 1000)
+	# interp 1
+	# cut 4
+
+d5 
+	-- $ sometimes (+ up (choose [0, 0, 0, 5, 7, 10, 12, 19, 22, 24]))
+	-- $ sometimes (+ up (choose [0, 4, 7, 11]))
+	-- $ rarely (+ up (choose [0, 3, 7, 10]))
+	$ rarely (|+ up (stack [ choose [0, 5, 7, 12], choose [0, 5, 7, 12]))
+	-- $ sometimes (|+ up (stack [ choose [-0.01, 3, 4], choose [10, 12.01], choose [5, 7] ]))
+	-- $ sometimes (|+ up (stack [ choose [-0.01, 3, 4], choose [10, 12.01], choose [5, 7] ]))
+	-- $ sometimes (|+ up (randcat [
+	-- 	"[0, 0.001, 3, 7, 6.999, 10, 12, 12.1]",
+	-- 	"[0, 0.001, 4, 7, 6.999, 11, 12, 11.9]",
+	-- 	"[0, 0.001, 5, 5.001, 7, 6.999, 11, 12, 11.9]",
+	-- 	"[0, 0.001, 7, 6.999]",
+	-- 	"[0, 0.001, 7, 6.999, 12, 11.9]"
+	-- ]))
+	$ stack [
+		"<bass>" 
+			# pan 0.3
+			|- pan (rand / 3)
+			+ up (rand / 20)
+		,
+		"<bass>" 
+			# pan 0.4
+			|- pan (rand / 5)
+			+ up (rand / 40)
+		,
+		"<bass>" 
+			# pan 0.6
+			|+ pan (rand / 5)
+			- up (rand / 40)
+		,
+		"<bass>" 
+			# pan 0.7
+			|+ pan (rand / 3)
+			- up (rand / 20)
+	]
+	# interp 1
+	# lpf (((rand * 20) + 2) * 500)
+	-- # lpq 0.3
+	-- # begin (7/80) # end (8/80)
+	-- # begin (2/80) # end (3/80)
+	# begin (12/80) # end (13/80)
+	# n 2
+	|+ up "<0 -5 -2 0 2 7 3>"
+	|- up 12
+	|+ up 6.3
+	# gain 0.61 
+	# loop 3999
+	# attack 3
+	# release 6
+	# octave 6
+
+
+d1 
+	-- $ swingBy ((5 + rand * 12)/100) 8
+	-- $ rarely (ply (choose [2, 4, 6]))
+	$ fast 4
+	$ stack [
+		every 8 (# s "sd") $ s "bd",
+		rarely (const (((4/16) <~) $ "sd")) $ "~"
+	]
+	# interp 1
+	# speed 0.99
+	# n 3
+
+d2 
+	$ swingBy ((5 + rand * 4)/100) 8
+	$ fast 8
+	-- $ rarely (ply (choose [2, 3, 4])) 
+	$ rarely (ply (choose [2])) 
+	$ s "hc" 
+	# n (rand * 8)
+	# release 0.1
+	# gain 0.7 
+	# hpf 6000
+	# speed 0.8
+	# interp 1
+	# cut 2
+
+d4 
+-- $ jux ((1/16) ~>) 
+-- $ swingBy ((5 + rand * 12)/100) 8
+-- $ stripe 3 $ slow 3
+$ up (
+	--toScale [0,2,4,5,7,9,11] 
+	toScale [0,2,4,5,7] 
+	-- $ chunk 12 (slow 4) 
+	$ (
+		"[1 ~ 1 5 ~ 5 6 ~ 6 4 ~ 4]/2"-1 +
+		 (fast "<2 4 3>" 
+			 (slowcat [
+				"[0(3, 8), 3(5, 8, 1)]",
+				"[<1, 9>(5, 6), <2, 5>(7, 8, <1, 2>), 4(3, 4)]",
+				"<5 8 7 6 4>(3, 8)",
+				"<1 2 3>(3, 8, 2)"
+			]))
+	)
+) 
+-- # begin 0.3
+# begin 0.0
+# end 0.9
+# gain 0.9
+# s "bass"
+# n (rand * 5)
+-- # loop 99
+# loop 99
+# octave 6
+# release 0.4
+-- # release 1.9
+
+
+d1 
+	$ swingBy 0.04 8
+	$ rarely (|* speed (-1))
+	$ fast 2
+	$ "bd bd? [cp bd?] [~ bd?]" # n 3 # gain 1.5 # release 0.4
+
+-- d1 $ "[[bd bd?] [sd ~ ~ <~ bd?>]]*2" # n 1 # gain 1.3
+d1 $ stack [
+		s "bd*4",
+		s "~ cp",
+		((1/16) <~) $ s "bd"
+	] # n 1 # gain 1.3 # release 0.2
+
+d3 
+	$ rarely (|* speed (-1))
+	$ "[~ hc]*4" 
+	# n 2 # interp 1 # speed 0.7 # gain 0.78
+	# release 0.4
+	# cut 3
+
+d3 
+	-- $ swingBy 0.09 8
+	$ chunk 4 (fast (choose [1, 2, 3, 1.5, 1]))
+	$ fast 4 
+	-- $ s "[~ hc*1]*2" # gain (0.8)
+	$ s "[ho]*2" 
+	# interp 1
+	# n 1
+	# speed 0.75
+	# hpf 8000
+	# gain (0.8 - (saw * 0.3))
+	# release 0.3
+
+d4 
+	$ swingBy 0.02 8
+	$ chunk 4 (fast 1.5) 
+	$ up (
+		-- toScale [0,2,5,7,9] 
+		toScale [0,3,5,7,10] 
+			-- $ rarely (|+ 12)
+			-- $ "<8 11 9 10 12>(3, 8, <0, 3>)"
+			$ "<0 1 2 3 4>(3, 8, <0 1 2 3>)"
+			|-| ((run 16) |% 8)
+			|+| (run 8 |% 6)
+			-- |+| "1(3, 8, 1)"
+	) 
+	|- up 3
+	# gain 0.9
+	# n 1
+	# loop 12
+	# octave 6
+	-- # attack 0.01
+	-- # release 0.4
+	# release 0.3
+	-- # begin 0.2 
+	-- # end 0.35
+	# s "juno"
+	-- # cut 4
+
+
+d5 
+	$ swingBy 0.06 8
+	$ chunk 4 (slow 2) 
+	$ chunk 6 (slow 2) 
+	$ chunk 8 (fast (choose [1.5, 2, 3])) 
+	$ fast 2 $ up (
+		toScale [0,3,5,7,10] 
+			$ "<0 1 2 3 4 5>(3, 8, <0 1>)"
+			|+| stack [
+				slow 2 "0(3, 8, 0)",
+				slow 3 "2(3, 8, 1)",
+				slow 4 "1(5, 16, 8)"
+			]
+	) 
+	|- up 3
+	|- up 12
+	# lpq (0.2)
+	# lpf ((rand * 8) * 1000)
+	# gain 0.93
+	# n 3
+	# loop 50
+	# octave 8
+	# interp 1
+	# release 0.4
+	# s "juno"
+
+d5
+	$ rarely (ply 2)
+	$ s "gretsch(3, 8, <2 3>)"
+	|+ randcat [
+		n (run 6),
+		n (run 12) + 9
+	]
+	|+| n "0, 1, 2"
+	# gain 1.4
+
+
+d1
+	$ s "gab(5, 8)" 
+	# lpq 0.3
+	# lpf 200
+	# n 7
+
+
+d1 $ (stack [s "bd", s "hc" # gain 0.5 # release 0.2 ]) |+| n "[0 ~ ~ 0]*4"
+
+d1 $ slow 1 $ "[bd*4 bd*2] [~ [bd ~ bd? ~]]*2" # gain 1.2
+
+d3
+	-- $ rarely (ply 2)
+	$ fast 2 
+	$ s "[~ ho]" # speed 0.25 # interp 1 # release 0.5 
+	# hpq 0.2
+	# hpf 900
+
+d3 
+	$ rarely (ply 4)
+	$ s "tabla(3, 8, <1, 2, 3>)"	
+	|+| randcat [
+		n (run 96),
+		n (run 48)
+	]
+	# gain 1.1
+
+d4 $ "alphabet(3, 8, <1 2 3, 4>)" # n (rand * 26) # speed (0.8 + (rand / 2)) # gain 1.1
+
+
+d5 $ "fire" # gain 1
+
+d4 $ "cosmicg(3, 8)" # n (rand * 15) # speed (0.8 + (rand / 2)) # gain 0.8

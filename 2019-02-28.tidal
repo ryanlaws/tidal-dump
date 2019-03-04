@@ -1,0 +1,107 @@
+d1 $ s "<bd [bd sd] [sd hc]!>" # gain 3
+
+do
+	setcps 0.67
+	d1 
+		$ slow 3 $ stripe 3 
+		-- $ s "hc*64" 
+		$ s "hc*8" 
+		# gain 0.7 # cut 1 
+		# pan 0
+		# release 0.1 
+		-- # speed ((fast "-3 0.5 9 -1 0.25" saw)*2) + 0.1
+	d4 
+		$ slow 3 $ stripe 3 
+		$ s "hc*8" 
+		# gain 0.7 # cut 1 
+		# pan 1
+		# release 0.1 
+	d6 $ slow 2 $ stripe 2 $ "hc*16" # speed (-1) # gain ((fast 2 saw*0.2) + 0.6)
+	d2 $ slowcat [ "~ cp", "~ cp@3" ] # gain 1.2
+	d3 $ slow 5 $ stripe 5 $ s "ht(3, 8, 1)" # speed 2 # gain 1.3 # cut 2 
+	d5 $ fast 2 $ s "lt(3, 8)" # speed 2 # gain 1.3 # cut 2 
+
+all (fast 1.0)
+
+all (fast 0.5)
+
+all (fast 0.25)
+
+do
+	d1 $ fast 2 $ "mt*<1 [[2? 7?]?]?>(3, 8)" # speed 1.5 # gain 1.2 # cut 2
+	d2 $ slowcat [ "~ cp", "~ cp", "~ cp", "~ cp@3" ] # gain 1.2 # speed 0.5
+	d3 $ "hc*16" # speed (-0.8) # gain 0.67
+
+
+d4 $ jux ((1/16) ~>) 
+$ stripe 3 $ slow 3
+$ n (toScale [0,2,4,5,7,9,11] 
+	$ (
+		"[1 ~ 1 5 ~ 5 6 ~ 6 4 ~ 4]/2"-1 +
+		"<[0(3, 8), 3(5, 8)] [1(5, 6), 2(7, 8), 4(10, 12)]>"
+	)
+) 
+# s "supermandolin"
+# legato 3
+# release 1
+
+d2 $ weave 4 (pan sine) 
+[
+	up "0",
+	up "12"
+]
+$ up (toScale [0,2,4,7,9]
+	$ (
+		"[[~ <0 1>][2 ~ ~ <1 0>]]" +
+		"<0 1 0 3 4 3 2 0 1 2>"
+	)
+) 
+# s "arpy"
+
+
+d1 $ weave 4 (pan sine)
+  [sound "bd sn cp",
+   -- sound "casio casio:1",
+   -- sound "[jvbass*2 jvbass:2]/4",
+   sound "hc*4"
+  ] 
+	|+| fast 2 (gain ((8 - (run 5))/8))
+
+d1 $ fast 2 $ s (
+	fit 1 ["bd", "sn", "lt", "ht:2", "mt", "808"] 
+	"[0(3, 8), 1(3, 8, <1 2 4>)]"
+)
+
+d1 $ weave 16 (sound "arpy" >| n (run 8))
+  [vowel "a e i",
+   vowel "i [i o] o u",
+   vowel "[e o]/3 [i o u]/2",
+   speed "1 2 3"
+  ]
+
+d1 
+$ every 4 (fast 2)
+$ every 16 (slow 4)
+$ weave 12 (
+	sound "arpy" >| up (((
+		--run "<4 5 6 7 8 9 10>"
+		run "<8>"
+	) * 7) |%| "12")
+)
+	[ 
+		n "1(3, 8, 0)" # pan 0,
+		n "1(3, 8, 2)" # pan 0.5,
+		n "1(3, 8, 4)" # pan 1
+	]
+	# loop 199
+	# begin 0.02
+	-- this kills the server because the loop is too long
+	-- # end (1 / (choose [0.1, 1, 2, 3]) / 10) + 0.2
+	-- might be able to use a random cat thing?
+	-- I think I read that command...
+	# end (1 / (choose [0.1, 1, 2, 3]) / 10) + 0.2
+	# release 2.8
+	+ up 0
+	* speed (0.99 + (rand / 100))
+
+
