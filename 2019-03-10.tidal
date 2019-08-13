@@ -1,0 +1,5 @@
+resetCycles
+
+do
+	d1 $ "[[[bd cp] 808ht:1] ~] 808oh cp 808hc:0" # gain 2 # release 0.03
+	d2 $ "808mt:1*16" # speed 0.5 |+ speed (saw) # interp 1

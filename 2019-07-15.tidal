@@ -1,0 +1,7 @@
+let derp = degradeBy 0.4 $ s "hc*48" # gain (timeDog (range 0.6 0.8 $ saw) [1, 2, 1, 4])
+
+let derp = s "hc*4" # gain (range 0.6 0.8 $ saw)
+
+d1 $ derp
+
+derp

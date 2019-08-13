@@ -1,0 +1,54 @@
+d1 $ stack [
+		n (-- toScale [0,2,5,7,9] 
+			(struct "t(3, 8)!2" (range (-20) 20 $ fast 13.7 $ saw))
+		),
+		-- n (struct "t(3, 8)!2" (range (-20) 20 $ fast 13.7 $ saw)),
+		ccv (fast (16/3) $ range 30 30 $ sine) # ccn 17, --  EG DECAY
+		ccv 127 # ccn 58, --  LFO WAVE
+		ccv 127 # ccn 59, --  LFO MODE
+		ccv 64 # ccn 26, --  LFO DEPTH 
+		ccv (segment 8 $ fast (11/7) $ run 127) # ccn 24 --  LFO RATE
+		-- ,ccv (range 0 127 $ struct "t(3, 8)!4" $ fast (31/5) $ saw) ccn 35 --  PITCH VCO 2 
+	]
+	# s "mnlg"
+
+d1 $ n (struct "t(3, 8)!2" (range (-20) 20 $ fast 11.7 $ saw))
+	# s "mnlg"
+
+-- cheesey pentatonic thing
+d1 $ n (toScale [0,2,5,7,9] (struct "t(3, 8, 1)!2" (fast "<11.3 0.5 5.1 4>" $ run 24) - 12))
+	# s "mnlg"
+
+-- cheesy housey thingy
+d3 
+	$ bite 2 ("[0 1]*<2 2 2 3>")
+	$ (stack [
+		n "0 3" # gain 1.2,
+		n "[0 2]!2" # gain 1.1,
+		degradeBy 0.5 $ n "~!7 0" # gain 1.1
+	])
+	# midichan 2
+	# s "nd" - n 12
+
+:t (range (-20) 20 $ fast 11.7 $ saw)
+
+:t (range (-20) 20 $ fast 11.7 $ irand 5)
+
+:t saw
+
+d2 $ n "[1 2 3 4]*4" # s "808"
+
+d3 
+	$ bite 8 (stack [
+		"[0 1 2](3, 8)",
+		slow 4 $ "~!63 1"
+	])
+--	$ fast (3/4) 
+	$ slow (3/4)
+	$ n (run 6)
+	# midichan 2
+	# s "nd" - n 12
+
+d4 $ s "[~ 808*2]*4" # n 1 
+	# gain (fast 4 $ range 1.1 0.8 $ saw) 
+	# release 0.07

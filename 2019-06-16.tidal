@@ -1,0 +1,44 @@
+setcps (100/240)
+
+d1 $ stack [
+	slow 2 $ s "bd bd bd [sd]",
+	slow 2 $ degradeBy 0.3 $ 
+		s "~@2 bd@5 bd@8 bd@2 bd@2 bd@2 bd@2 bd@3 bd@3 bd@2 bd"
+		# gain 0.8 # speed 0.9,
+	slow 2 $ s "hc*32" # gain ("[8 5 6 5]*8"/10.0) # speed 1.1,
+	slow 2 $ s "gretsch" # n 16 # gain 0.8,
+	slow 2 $ s "arpy*4" # n (run 4) # interp 1 # speed 0.125
+] 
+
+d2 $ slow 2 
+		$ stutWith 10 (0/32) ((|+ up 0.05) . (|+ begin (rand / 20)) . (|* gain
+		0.96) . 
+	(|+ attack 0.03) . 
+		(|+ loop 8) . (|+ release 2)) 
+		$ s "[~ arpy ~ arpy]*4" # rot 2 (n (fast (7/3) (run 8)) + 6) 
+		# interp 1 # speed 0.5 # gain 0.8 # loop 9 # end 0.3
+		# attack 0
+		# release 0.25
+
+:t n
+
+:t range
+
+:t run
+
+setcps (110/240)
+
+-- like half a tune right here...
+d1 $ stack [
+	-- slow 4 $ "[bubble*5](3, 16)" # n (irand 7)
+	fast 2 $ s "808bd(3, 8)" # n (irand 20) # shape 0.8 # gain 0.8,
+	slow 2 $ stutWith 17 (3/32) ((|* gain 0.92) . (|+ hpf 600)) $ s "[~ 808]*2" # n 3 # release 0.1 # gain 1.1 # hpf 0 # hpq 0.1,
+	s "808:1*4" # release 0.1 # gain 0.9,
+	s "[~ 808:1]*4" # speed 0.5 # interp 1 # hpf 6000 # gain 0.9
+]  
+
+do
+	-- how do I structure this in a way that's not gross?
+	let stutFn = ( (# n ((irand 6) + 1)) .  (|* gain 0.93) .  (|+ up (rand / 2)) .  (# shape (rand / 3)))
+	d2 $ stutWith 24 (1/choose([16, 16, 16, 24, 32])) stutFn
+			$ slow 2 $ s "bubble(3, 8)" # n 4 # gain 1.2 # interp 1

@@ -1,0 +1,29 @@
+setcps (160/240)
+
+d1 
+	$ fast 1
+	$ stack [
+		-- whenmod 4 3 (fast 3) $ 
+			fast 2 $ n "0(3, 8)"
+		,fast 2 $ n "<~ [~ 3]> <3 ~> ~ <~>"
+		,n "~ 1"
+		,n "2*<16 8 16 4 16 12>"
+	]
+	# s "midi" 
+	# midichan 2
+	- n 12
+
+d2
+	$ fast 2
+	-- $ ((1/96) ~>)	-- fjopp (jump after note on)
+	$ mask "t(3, 8)"
+	$ ccv (segment 8 $ fast (31/7) $ 30 + sine * 45)
+	# ccn 31 -- tone pitch
+	# s "midi" 
+	# midichan 2
+
+d3 
+	$ ccv (segment 16 $ slow 2 $ 20 + sine * 25)
+	# ccn 50 -- tone decay
+	# s "midi" 
+	# midichan 2

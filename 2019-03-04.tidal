@@ -1,0 +1,241 @@
+setcps (116 / 240)
+
+let rep = repeatCycles
+
+d1 
+	$ whenmod 4 3 (zoom (0, (1/2)))
+	$ whenmod 8 7 (striate 4)
+	$ stack [
+		"[<bd [bd*2]?> <~ ~ [~ bd?]>]*4" # speed 2 # gain 2 # release 0.002,
+		fast 2 $ "~ cp" # release 0.06,
+		fast 16 $ "hc" # release 0.005 # gain 0.7
+	] 
+
+d1 
+	$ rarely (zoom (0, 1/4))
+	$ rarely (stutWith 16 (1/16) ((|*| gain 0.9) . (|+| up 0.10)))
+	$ fast 2 
+	$ stutWith 1 ((3/16) + (rand/128)) ((|*| gain 0.8) . (|+| up 0.01))
+	$ "[lt ~ ~ lt ~ cp]" # gain 1.5 # release 0.2
+
+d4 $ "bd*4" # gain 5.1 # release 0.2
+
+d3
+	$ rarely (ply 2)
+	-- $ rarely (striate 8)
+	$ fast 12 $ "hc" # release 0.05
+	# cut 3
+
+-- HOT STUFF!
+d2 
+	$ sometimes (iter (choose [1, 1, 2, 1, 3, 4, 1, 2, 6]))
+	$ every 7 (rev)
+	-- $ sometimes (repeatCycles 4)
+	$ almostNever (fast 4)
+	$ fast 2
+	$ sometimes (# stack [
+		pan 0.3 |* speed 0.99,
+		pan 0.7 |* speed 1.01
+	])
+	$ almostNever (
+		(# end rand) . 
+		(# loop 90) . 
+		(# release 2.0)
+	)
+	$ sometimes (superimpose (
+		((1/48) ~>) . 
+		(|+ stack [up 4, 7, 10, 12.1, 19, 24]) .
+		(|* gain 0.8)
+	))
+	$ "juno" # octave 6 # loop 4 # release 0.3
+	# n (segment 16 (rand * 5))
+	|+| up "[0 ~ 2]"
+	# gain 1.2
+
+d2 
+	$ iter 2
+	$ every 3 (
+			stutWith (choose [2, 3, 2, 5, 2, 8]) (3/16) (
+				(|* gain 0.9) . ((rand / 150) <~)
+		))
+	$ fast 2 $ "[lt <lt? [~ lt]?>] cp" 
+	# n (choose [0, 2])
+	# release 0.09 
+	# interp 1
+	# speed ((rand / 10) + 0.8)
+
+d3 
+	$ iter 2
+	$ fast (segment 1 $ choose [2, 4]) 
+	$ s (
+		rarely (const ("hc hc ho hc"))
+		$ "hc*2"
+	) 
+	# speed 1.2 # gain 0.7
+
+" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ "
+
+d1 
+	-- $ sometimes (stutWith (1/8) id)
+	$ iter 2
+	$ superimpose (
+		((rand / 196) ~>) 
+		. (|* gain 1.0)
+		. (|+ up (rand / 80))
+	)
+	$ fast 4
+	$ almostNever (|+ up 4)
+	$ s "juno"
+	|-| up (
+		every 4 (const $ "~ 5 ~ 2") 
+		$ "0 [~ 0]"
+	)
+	# n 1
+	|+ up 3
+	# loop 9
+	# release 0.5
+	# gain 0.85
+
+d1 $ superimpose (|> stack [
+		s "hc" |* gain 0.9, 
+		(0.125 ~>) $ s "sd" |* gain 1.1
+	])
+	$ s "lt*2 cp" # n 1 # gain 1
+
+d1 $ euclid 3 8 $ "[sd, hc]"
+
+d1 $ striate 16 $ s "arpy*8" # n (run 8)
+
+setcps 1
+
+-- d1 $ every 4 (ply 2) $ every 3 (rot "1 2 3") $ fast 1 $ "bd hc cp hc" # n 8 # release 0.1 # cut 1
+setcps (120/240)
+
+d1 $ fast 2 $ every 2 (rot "1") $ fast 1 $ "bd hc cp hc"
+
+d1 $ stack [
+	s "[bd sd]*2",
+	s "[bd ~ ~ bd?] [~ bd? ~ [~ bd?]]"
+]
+# n (choose ([1, 2, 3]))
+# gain 1.2 # cut 1 # n (rand * 10) # release 0.05
+
+d3  $ almostNever ((|> s "ho") . (# release 1) . (|* gain 1.1))
+$ s "hc*16" # gain 0.72 |* release 0.3
+
+d2 
+	$ sometimes (iter 16)
+	$ every 5 (rot 2) 
+	$ almostNever (|+ up 12)
+	$ rarely (superimpose (|+ choose [7, 10, 12]))
+	$ every 3 (
+		(|> end (rand / 2)) . 
+		(|> release 2) .
+		(|> loop 40) .
+		(|> accelerate (-0.03))
+	) 
+	$ sometimes (fast 2)
+	$ "juno" # n 1 # loop 5 # release 0.8
+	|+| (up 
+		$ sometimes (const (stack [
+			"0(3, 8)",
+			"5(3, 8, 2)"
+		]))
+		$ "0 ~ ~ 3 ~ <7 10> ~ ~ ~ <~ 1> ~ ~ ~ "
+	)
+
+d1 
+	$ iter 8
+	$ sometimes (|+ up (choose [3, 5, 7, 10]))
+	$ stutWith 12 (2/16) (
+		(|* end (0.6 - (rand / 5))) . (|* loop 3) . 
+		(|+ release 0.15) . (|* gain 0.98) .
+		(|+ pan ((rand / 10) - 0.05)) .
+		(|+ speed ((rand / 100) - 0.005))
+	)
+	$ slow 2 (s "juno(3, 8)" # n 1 # release 0.1 # pan 0.5 # speed 1)
+
+
+d1 
+	-- $ segment (choose [8, 16, 8, 32])
+	$ iter 6
+	$ whenmod 7 2 ((|+ up 12) . (|* loop 2))
+	$ whenmod 5 3 ((|+ up 12) . (|* loop 2))
+	$ whenmod 4 3 ((# stack [
+		pan 0.3 |* speed (1 - (fast 11 (sine / 400))),
+		pan 0.7 |* speed (1 + (fast 13 (sine / 400)))
+	]) . (|* gain 0.9))
+	$ whenmod 3 2 (# accelerate (0 - ((fast 87 $ sine) / 40)))
+	$ end (fast 47 $ range 0.02 0.09 $ sine)
+	>| (s "juno(3, 16)")
+	# n 1 
+	# octave 5
+	# up "<7 10 3 5>"
+	# interp 1
+	# loop 256 # release 4
+
+
+d1 $ superimpose (|> stack [
+		s "hc" |* gain 0.9, 
+		(0.125 ~>) $ s "sd" |* gain 1.1
+	])
+	$ s "lt*2 cp" # n 1 # gain 1
+
+resetCycles
+
+streamNudgeAll tidal 0.1
+
+d1 $ whenmod 3 1 (stutWith 5 (1/16) (
+		(|+ up 12.009) . (|* gain 0.95)) . 
+		(|* loop 2)
+	) 
+	$ whenmod 6 4 (# end (fast 13 $ range 0.1 0.8 $ saw))
+	$ s "juno" # n 1 # loop 50 # gain 1
+	-- $ s "akwf" # n 500 # loop 900 |+ up 10 # gain 0.7
+	# interp 1
+	# end 1
+	# release 3
+	|+| up "[0 3 7] ~ ~ ~ ~ ~ "
+	|+ up "<0 5 7 12>"
+	# gain 0.9
+
+d1 $ up "0(3, 8)"
+# stack [
+	s "juno" # n 1   # gain 1   # pan 0.3 # loop 2   |+ up 0,
+	s "akwf" # n 500 # gain 0.7 # pan 0.7 # loop 500 |+ up 10
+] # release 0.4
+
+d2 $ whenmod 3 2 (const "bd*16")
+	$ "[bd(3, 8)]*2"
+	# gain 1.2
+	# release 0.1
+
+d3 $ "hc*16" # speed (-1.5) # gain 0.7
+
+d4 $ "~ [[cp ~ ~ cp?] ~ ]" # gain 1.1
+
+-- that (sine / 25) - 0.02 could be a helper..
+d5 
+	$ whenmod 3 2 (
+		(|+ up 12) . (|* loop 10) . 
+		(# accelerate ((slow 7 $ sine / 25) - 0.02)) .
+		(# release 4.0) . (# cut (-1)) .
+		(|* gain 0.8)
+	)
+	{- $ always (|+  stack [
+		pan 0.4 |- up 0.01,
+		pan 0.6 |+ up 0.01
+	]) -}
+	$ "[akwf(3, 8)]*2" 
+	# interp 2
+	# up (cat [ "-2", "-2 -2 3 1", "0", "0 0 0 -4"])
+	# n ((fast 5 $ saw * 10) + 499) 
+	# loop 59 # release 0.2 # cut 1
+	# gain 0.9
+
+d1 $ superimpose (|*| stack [
+		s "hc" # gain 0.8,
+		(0.125 ~>) $ s "sd*3" # gain 0.7
+	])
+	$ "bd(3, 8)"
+

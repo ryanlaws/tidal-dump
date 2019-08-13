@@ -1,0 +1,14 @@
+-- 2019-06-19.tidal
+-- cool-stuff.tidal
+d1 $ stack [
+	fastCat [
+		s "808bd(3, 8)" # n 6 # up (slow 4 "0 -3") # shape 0.4,
+		s "808sd" # n 6
+	],
+	stutWith 2 (3/16) ((degradeBy 0.5) . (|* gain 0.8)) $ s "808*4" # n 1
+]
+
+d2 $ stack [
+	stutWith (2 + irand 5) (1/(8 + (irand 32))) ((|+ up 12) . (|* gain 0.8)) $
+	slow 2 $ up "7@7 <[7@3 [3 7]@6] [5@5 8@4]>@9"
+] # s "superpiano" # gain 0.8 |- up 24

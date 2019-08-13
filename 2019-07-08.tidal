@@ -1,0 +1,8 @@
+d1 $ s "808bd*4" # n 5 # shape 0.7
+
+asap $ slow 8 
+	$ s (timeDog ("808*256") [1..8]) 
+	# speed (timeDog (range 2 0.5 $ tri) [1..4]) 
+	# n 3 # cut 3
+
+

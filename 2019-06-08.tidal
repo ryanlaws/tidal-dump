@@ -1,0 +1,76 @@
+d1 
+	$ fast 2 
+	$ "t(3, 8)*2"
+	# s "[bd sd]*17/13"
+	# gain "[1.1 0.8]*2"
+	# speed 0.8
+	# cut 1
+	# interp 1
+
+d1
+	-- $ "bd [sd ~ ~ bd ~ ~ bd ~]]"
+	$ "bd [hc ~ ~ bd ~ ~ bd ~]]"
+	# speed ("8 [2 ~ ~ 8 ~ ~ 8 ~]]" / 8)
+	# gain 0.32
+	* gain "4 [2.6 ~ ~ 4 ~ ~ 4 ~]]"
+	-- $ "bd hc"
+	-- # speed ("8 1" / 8)
+	# speed 0.5
+	# release 0.15
+	# interp 1
+
+d2 
+	$ rarely (+ release 1.2) 
+	$ "[~ hc:3]*2" 
+	# n 4
+	-- # end (segment 32 (slow (3/8) sine / 16) + 0.01)
+	# end 0.9
+	# loop 64
+	# gain 0.6 
+	# release 0.38 
+	-- # speed 0.3
+	# speed 0.4
+	# interp 1
+	-- # mask "t" (* gain 1)
+
+d3 
+	$ mask "[~ t ]*4"
+	$ "[hc:3]*[<16 24>*2]" 
+	# n 1
+	-- # gain 0.55
+	# gain ((fast (7/5) sine) * 0.1 + 0.52)
+	# release 0.03 # speed 1.2
+
+
+d4 
+	$ mask "t(3, 8)"
+	$ linger (3/16)
+	$ hurry 1.0 $ fast 2 
+	$ s "bd <~*4 [bd sd]> <sd ~*3> ~" 
+	# fast 2 (gain "1 0.7")
+	# speed 0.2
+	# n 3 
+	# interp 1 # release 0.14
+
+d5 
+	-- $ every 2 (# up -2)
+	$ slow 2 
+	$ s "juno:1" 
+	+ up "<0*2 ~> ~ 0*2 [~ ~ -2*2 ~ ]" 
+	|+ up ((slow 5 sine) / 8)
+	# gain 0.9  # loop 32 # release 0.5 
+	- up "[12 14]/4"
+	# cut 5
+
+d6 
+	-- too much random :( how to convert sine to int?
+	$ bite 8 (segment 4 (irand 8))
+	$ layer [
+		(|+ up 11.9) . (#cut 61) . (* "t(3, 8, <0 1 2>)") . (# pan "<0.3 0.7>"),
+		(|+ up 0.1) . (#cut 62) . (* "t(5, 16, <2 0 4>)") . (# pan "<0.7 0.3>")
+	]
+	$ s "juno:1" 
+	+ up "[0 2 5 7]/<1 4 3 4 2 8>" 
+	# gain 0.8
+	# loop 32 
+	# release 0.5

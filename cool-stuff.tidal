@@ -1,0 +1,15 @@
+-- Helpful Info
+	-- dirt-samples.txt
+	-- functions.tidal
+
+-- MIDI maps
+	-- bam.tidal
+	-- monologue.tidal
+	-- nd2.tidal
+	-- volca-sample.tidal
+
+-- 2019-06-19.tidal
+	-- figured out the saw stretching, made a helper called timeDog
+	-- (which is now in ~/src/Tidal/custom-functions.hs )
+
+-- Tidal.ghci

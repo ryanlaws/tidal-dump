@@ -1,0 +1,13 @@
+d1 $ slow 2 $ 
+	n (off 0.25 (+3) $ off 0.125 (+7) $ slow 2 "c(5,8,0) d(5,12,1) e(7,8,2) f(7,12,3)")
+	# sound "superpiano"
+
+d2 $ fast (((slow 5 sine) * 255) + 1) "bd" -- "sd:2 bd hc*12 amen" 
+	# speed (((slow 7 sine) * 3) + 0.25)
+	-- # speed 0.01
+	# start 0.3
+	# gain (fast ((slow 3 sine) * 16) sine) 
+	# cut 2
+	# interp 1
+
+

@@ -1,0 +1,13 @@
+setcps (140/240)
+
+-- HOT TOOLIE
+d1 $ stack [
+	slow 2 $ 
+		stutWith 3 (1/32) ((|* gain 0.9) . (|* release 1.5). (|* speed 1.1)) $  
+		s "bd!3 hc!5 sd!2 hc!3 bd!2 hc" # release 0.01,
+	s "808bd@3 808bd@5" # n 6 # shape 0.5 # gain 1.1,
+	((4/16) ~>) $ s "cp@3 cp@5" # n 1 # speed 0.9 # shape 0.3 # gain 1.25 # interp 1,
+	s "hc*16" # speed 0.7 # gain (range 0.8 0.4 (fast 4 saw)) # interp 1,
+	whenmod 4 3 (# gain 1.1) $ 
+		s "~@14 808bd!2" # n 6 # shape 0.5 # gain 0
+]

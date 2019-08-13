@@ -1,0 +1,84 @@
+-- 2019-03-04.tidal
+
+do
+	d1 
+		$ every 7 (iter 6)
+		$ superimpose (
+		((1/6) ~>) . (# s "hc")
+		)
+		$ every 3 (ply 2)
+		$ "sd:1? ~ cb ~ cb ~"
+		|+ up "<0 0 2 2>"
+	d2 
+		$ every 5 ((1/6) ~>)
+		$ "juno:2" # gain 0.9
+		# loop 20
+		# up ((slow 2 sine) / 20)
+		# release 5
+		|+ up "<0 <-12 -10> 2 -10>" 
+		|- up 12
+	d3 
+		$ every 3 ((1/6) ~>)
+		$ "juno:2" # gain 0.9
+		# end ((fast 11.1 saw / 2) + 0.1)
+		# loop 20
+		# up ((slow 2 sine) / 20)
+		# release 2
+		|- up 12
+		|+ up "<4 7 6 9>" 
+		|+| up "0 <-4 -7> ~ ~ ~ ~" 
+
+d1 $ superimpose (# stack [
+		s "hc" # gain 0.8
+		, (0.125 ~>) $ s "sd" # gain 1.1
+	])
+	$ s "cb ~ cb ~ ~ ~"
+	# gain 0.9
+
+do
+	d1 $ layer [
+			id
+			, (# s "hc")
+			, ((slow 13 sine / 4) ~>) . (# s "sd:1") . (# gain 1.1)
+			, (((1 - (slow 11 sine)) / 4) ~>) . (# s "sd:1") . (# gain 1.1)
+		]
+		$ s "cb ~ ~ cb ~ ~ ~ ~"
+		# gain 0.9
+	d2 $ fast 8 $ every 5 (fast "<2 3 4>/3") $ s "hc"
+
+d1 $ layer (map (\f -> fast (f / 10 + 1)) [0..6]) $ s "juno:1" # gain 0.8
+
+d1 $ layer (map (\f -> fast f) 
+	[1.01, 1.11, 1.21, 1.31, 1.41, 1.51, 1.61, 1.71, 1.81, 1.91]) 
+	$ s "juno:1" # gain 0.9 
+	# speed ((rand / 500) + 0.999)
+	# pan rand
+	# end (rand / 10)
+	# attack (rand / 5) 
+	# release (rand * 2) # loop 20
+
+layer (map (\f -> fast (f / 10 + 1)) [0..6]) $ s "1"
+
+d1 $ "juno:1(3, 8)" 
+	|+ up 12
+	|+ up (breakUp "[0, 4, 7]")
+	# gain 0.9 # release 0.3
+
+do 
+	setcps (140/240);
+	d1 $ stutWith 8 ((-1)/32) ((# s "sd:0") . (|* gain 0.9) . (# cut 1))
+		$ "cb ~ cb? ~ ~ ~"
+		-- # ring "1.0"
+		-- # ringf (2000 + ((slow 5 sine) * 5000))
+		# fshift 0
+		# fshiftphase 0.2
+		# fshiftnote (-12)
+	{- 
+	d2 $ slow 2 "juno" 
+		# n 1
+		# loop 12
+		# phaserdepth 9.5	
+		# phaserrate 0.3
+		# gain 0.8
+		# cut 2
+	-}

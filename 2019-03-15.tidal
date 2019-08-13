@@ -1,0 +1,7 @@
+d1 $ s "mt*128" 
+	# gain (squeezeJoin 
+		$ const saw <$> ("1@3 1@3 1@2" :: Pattern Int))
+	# speed 4
+	# cut 1
+
+d2 $ "hc*16"

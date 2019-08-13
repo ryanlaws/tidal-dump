@@ -1,0 +1,55 @@
+-- let's figure out bite and chew!
+d1 $ chew 8 "<0 3>*<1 2 3> 2 0 3 0*2 6 [6*2 6*3 6*4 6*5 6*6]@2" $ stack [
+	struct ("t@3 t@3 t@4 t@4 t@2") $ s "808bd" # n 0,
+	struct ("~@4  t@8 t@4") $ s "808sd" # n 3,
+	struct ("[~!2 t@2]!4") $ s "808" # n 1
+]
+
+-- yaxu on chew and bite:
+	-- It is an alternative to splice 
+	d1 $ chew 8 "0 [1 3] 2 3 6 [~ 3] 2*2 1" $ loopAt 1 $ chop 16 $ sound "breaks165"
+	-- I guess chew is to bite, what splice is to slice
+
+d1 $ n (select 
+		(segment 0.25 $ rand) 
+		["0(3, 8)!4", "1(3, 8)!3", "2(3, 8)!2", "3(3, 8)!6", "3(3, 8)!8"]
+	) 
+	# cut 1
+
+
+-- dat cowbell akshun!
+d1 $ (select (segment 4 $ fast 9.3 saw)
+		[
+			s "[808bd 808:1]!4", 
+			s "[808bd 808:1 [808bd, 808:3] 808:1]!2", 
+			s "[808bd 808:1!3]!4", 
+			s "[808bd 808:1 <[808bd, 808:3] 808bd*2> 808:1]!2",
+			s "[808bd 808:1!2]!4", 
+			s "[808bd 808:3]!4",
+			s "[808bd 808:3]!8",
+			stack [
+				s "[808bd 808:3*<2 3 4>]!4",
+				s "[~ 808!4]*8" 
+					# end (range 0.001 0.2 (segment 128 $ fast 2.3 sine)) 
+					# up (range (-12) 12 $ saw) 
+					# pan (range 0.2 0.8 (slow 3.1 sine)) 
+					# gain 0.8 # interp 1
+					# release 2
+					# loop (range 1000 5 (segment 128 $ fast 2.3 sine)) 
+					# cut 134
+			],
+			s "808bd*128" # cut 1
+		])
+-- learn splice and slice too, I guess!
+
+d1 $ s "808:3!12"
+
+d1 $ s "[808bd 808:3!2]!4"
+
+d1 $ s "[808bd 808:3]!6"
+
+d1 $ s "[808bd 808:3!3]!4"
+
+:t bite
+
+:t chew

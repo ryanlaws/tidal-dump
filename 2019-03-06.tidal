@@ -1,0 +1,14 @@
+-- 2019-03-04.tidal
+-- make em say uhhhhhhhh
+-- na na, na na
+
+setcps (60 / 140)
+
+
+do {
+	d1 $ slow 1 $ s "[bd <~ ~ ~ bd>]*2 [[sd bd] [~ bd]]" # n 1 # gain 2;
+	d2 $ slow 1 $ s "~ [hc <~ ~ hc ~>]" # gain 1.5;
+	d3 $ fast 2 $ s "<hc*4 hc*4 hc*8 hc*16>" # gain 0.8;
+	d4 $ s "<ho cp arpy juno>" # speed 0.5 # loop 2;
+	streamResetCycles tidal;
+}

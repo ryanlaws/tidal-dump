@@ -1,0 +1,10 @@
+setcps (90/240)
+
+d1 $ s "[alphabet(3, 8)]*2" # n "[9 14 7 13]" 
+
+-- d1 $ n "[5!4 20@4]*8"  $ s "[alphabet(3, 8)]*2" 
+d1 $ n "[5 5 ~ 5 20@4]*2"  # s "alphabet" # cut 5 # gain 0.8
+
+d2 $ s "[808bd 808sd]*2" # n 3
+
+d3 $ s "[~ hc]*4" # speed 2 # interp 1

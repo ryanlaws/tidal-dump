@@ -1,0 +1,45 @@
+setcps (110/240)
+
+d1 
+	$ sometimesBy 0.2 (fast 2)
+	$ "808sd*16" # n (choose [0, 1, 2, 3, 4, 5, 6, 7, 8])
+	# gain 0.7
+
+d2 $ n "[~ 3]*2" # s "808" # interp 1 # speed 0.6
+
+d3 $ struct "t@7 t t@5 t@3" (n 5) # s "808bd" 
+	# shape 0.9
+	# speed 0.7
+	# interp 1
+
+d4 $ n "[~ 1]*4" # s "808" # gain 0.8
+
+
+let rhythm = "t@4 <t ~>@1 t@3" 
+
+d1 $ stack [ 
+	struct rhythm $ sound "808bd" # gain 1.0 # shape 0.7 
+		-- + up (slow 2 $ "6 0")
+		-- + up 5
+		# n 1 # release 0.7,
+	slowcat [
+		fast (2 * 160/(160 + 96)) $ s "hc*160",
+		fast (4 * 96/(160 + 96)) $ s "sd*96" 
+	]
+		# gain (range 0.4 0.8 $ timeDog (fast 1.0 saw) [2, 3, 2, 1]) 
+		# speed (range (fast (7/5) $ "0.5 4 5 12") 0.5 
+			$ timeDog (fast 1.0 saw) [3, 5, 2, 4]) 
+		# interp 1
+		# cut 1,
+	every 4 (fast 2) $ s "808*8" # n 1 # release 0.05 # speed 1.5
+] 
+
+d2 $ stack [
+	s "juno" # gain 1.15 # loop 11 # end 0.4 # release 2,
+	-- struct rhythm $ s "juno" 
+	s "juno*16" # n 1 # gain 0.8
+		- up 12
+		+ up (toScale [0, 3, 6] $ run 8) 
+		# release 0.5 # loop 5 # cut 5 
+]
+

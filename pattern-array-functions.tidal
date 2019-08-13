@@ -1,0 +1,20 @@
+randcat ps = spread' rotL (
+	_segment 1 $ (%1) . 
+		fromIntegral <$> (
+			irand (length ps) :: Pattern Int
+		)
+) (slowcat ps)
+
+
+distrib :: [Pattern Int] -> Pattern a -> Pattern a
+-- ????
+stackwith :: Unionable a => Pattern a -> [Pattern a] -> Pattern a
+-- | chooses between a list of patterns, using a pattern of floats (from 0-1)
+select :: Pattern Double -> [Pattern a] -> Pattern a
+-- | chooses between a list of functions, using a pattern of floats (from 0-1)
+selectF :: Pattern Double -> [Pattern a -> Pattern a] -> Pattern a -> Pattern a
+-- | chooses between a list of functions, using a pattern of integers
+pickF :: Pattern Int -> [Pattern a -> Pattern a] -> Pattern a -> Pattern a
+{- @squeeze@ ipat pats | uses a pattern of integers to index into a list of patterns.
+-}
+squeeze :: Pattern Int -> [Pattern a] -> Pattern a

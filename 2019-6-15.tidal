@@ -1,0 +1,18 @@
+setcps (140/240)
+
+once $ stack [
+		ccv 0 # ccn 0,
+		ccv 0 # ccn 32,
+		progNum 5
+	]
+	# s "midi" 
+	# midichan 2
+
+d1 $
+	stack [
+		n "0*4" # gain 1.2,
+		n "[2 ~ ~ 2]*4" # gain 1.1
+	]
+	# s "midi" 
+	# midichan 2
+	- n 12
